@@ -1,0 +1,265 @@
+@import "compass/css3";
+
+/* Import Icon fonts and web font */
+
+@import "http://fonts.googleapis.com/css?family=Open+Sans:400,300,700";
+@import "http://weloveiconfonts.com/api/?family=entypo";
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+
+/* entypo */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+/* fontawesome */
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+
+
+
+/* Colors declarations */
+
+$lighterGray:     #E0E1E3;
+$lightGray:       #4b4e57;
+$mediumGray:      #373B46;
+$darkGray:        #1F222A;
+$darkerGray:      black;
+$pink:            rgba(#D23A51, 0.9);
+$font:            #eee;
+$darkFont:        #60646e;
+$icon:            #3D414C;
+
+
+
+
+/* General styles */
+
+.wrapper {
+  width: 600px;
+  height: 480px;
+  margin: 10% auto;
+
+  background-color: $darkGray;
+  border-radius: 7px;
+}
+
+body {
+  color: $font;
+  font-family: 'Open Sans', sans-serif;
+
+  background-color: $lighterGray;
+}
+
+nav {
+  width: 120px;
+  height: 100%;
+  float: left; 
+
+  background-color: $mediumGray;
+  border-radius: 7px;
+
+  ul li{
+    width: 120px;
+    height: 90px;
+    float: left;
+
+    text-align: center;
+    line-height: 90px;
+
+    background-color: $mediumGray;
+
+    &.last{
+      height: 100px;
+
+      line-height: 140px;
+    }
+
+    &.active{
+      background-color: $lightGray;
+      border-radius: 7px 0px 0px 0px;
+    }
+
+    a{
+      color: $font;
+      font-size: 2.2em;
+      text-decoration: none;
+
+      transition: font-size 0.2s;
+
+      &:hover {
+        font-size: 2.6em;
+      }
+    }
+  }
+}
+
+section {
+
+  height: 100%;
+  box-sizing: border-box;
+  padding: 10px 40px;
+  float: left;
+  position: relative;
+
+  background-color: $darkGray;
+  border-radius: 7px;
+
+  h1 {  
+    width: 400px;
+    padding: 20px 0px 35px 0px;
+    position: relative;
+
+    font-size: 1.5em;
+
+    border-bottom: 2px solid $lightGray;
+
+    a.add {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 10px;
+      right: 0px;
+
+      color: $lightGray;
+      font-size: 2.4em;
+      text-align: center;
+      line-height: 45px;
+      text-decoration: none;
+
+      background-color: $darkerGray;
+      border-radius: 3px;
+
+      transition: color 0.5s;
+
+      &:hover {
+        color: $font;
+      }
+    }
+  }
+
+  .temperature {
+    padding: 40px 0px;  
+
+    color: $icon;
+    font-size: 6em;
+
+    transition: color 0.5s ease;
+
+    &:hover {
+      color: yellow;
+    }
+
+    h2 {
+      display: inline;
+
+      color: $font;
+      font-weight: 300;
+
+      span.degree-symbol {
+        display: inline-block;
+        margin: 0px 15px;
+
+        font-size: 0.6em;
+        vertical-align: top;
+      }
+
+      span.celcius {
+        display: inline-block;
+        margin: 10px 0px 0px 15px;
+
+        color: $icon;
+        font-size: 0.3em;
+        vertical-align: top;
+      }
+    }
+  }
+
+  ul {
+    padding: 5px;
+    margin-bottom: 70px;
+
+    li {
+      display: block;
+      float: left;
+      margin-right: 60px;
+
+      color: $icon; 
+      font-size: 2em;
+
+      &:last-child {
+        margin-right: 0px;
+      }
+
+      span {
+        padding-left: 10px;
+
+        color: $font; 
+        font-size: 0.6em;
+        line-height: 30px;
+        vertical-align: top;
+      }
+    }
+  }
+
+  .bullets {  
+    height: 70px;
+
+    color: $icon;
+    text-align: center;
+
+    span {
+      margin-right: 10px;
+
+      font-size: 0.6em;
+
+      &.active {
+        color: $font;
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  a {
+    color: $darkFont;
+    font-size: 1.2em;
+    text-decoration: none;
+
+    transition: color 0.5s;
+
+    &:hover {
+      color: $font;
+    }
+
+    .external-link {
+      padding-left: 5px;
+
+      font-size: 0.6em;
+      vertical-align: middle;
+    }
+  }
+
+  .share {
+    width: 100px;
+    height: 90px;
+    position: absolute;
+    bottom: 20px;
+    right: -10px;
+
+    color: $font;
+    font-size: 2em;
+    text-align: center;
+    line-height: 90px;
+
+    background-color: $pink;
+
+    transition: right 0.2s;
+
+    &:hover {
+      right: -20px;
+    }
+  }
+}
+
