@@ -28,6 +28,8 @@ html,body {
   </head>
   <body>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>
 $(function(){
@@ -36,8 +38,19 @@ $(function(){
     screen_name:'heyhey0111',
     count:10
   };
+  var OAUTH_CONSUMER_KEY        = "RyHO8voqHhQMAdybXvlQm5cGZ";
+  var OAUTH_CONSUMER_SECRET     = "CPQ5lc49sUOX0eIIKrPPVPTfJeIJbm9C3PTqY0P1av6aNKz5sN";
+  var OAUTH_ACCESS_TOKEN        = "1127330335-QEV7mW0MkCJEgesejkm9kdiglbG5RYVxzaWYSIn";
+  var OAUTH_ACCESS_TOKEN_SECRET = "XiOMXhqGHZ9bMnS12z2ECQuS0ZgQhpp7ax0WkFPwtZtZS";
+
+  var URL ="https://api.twitter.com/1.1/statuses/user_timeline.json";
+  var encodeURL = encodeURIComponent(URL);
   var paramStr =encodeURIComponent(_makeString(params));
-  console.log(paramStr);
+  var keyStr   =_makeKey();
+  var dataStr  ="GET&"+encodeURL+"&"+paramStr;
+  var encrypted = CryptoJS.HmacSHA1(dataStr,keyStr);
+  var hash =CryptoJS.enc.Base64.stringify(encrypted);
+
   function _makeString(par){
     var index=[];
     var str='';
@@ -50,14 +63,23 @@ $(function(){
     }
     return str.slice(0,-1);
   };
-  /*
-  $.ajax({
-    url: 'https://api.twitter.com/1.1/statuses/user_timeline.json?',
+  function _makeKey(){
+    return encodeURIComponent(OAUTH_CONSUMER_SECRET)+"&"+encodeURIComponent(OAUTH_ACCESS_TOKEN_SECRET);
+  };
+  $.get({
+    url: URL,
+    data: 'screen_name='+params['screen_name']+'&count='+params['count'],
     headers: {
-      'Authorization: OAuth count=10,oauth_consumer_key=RyHO8voqHhQMAdybXvlQm5cGZ,oauth_nonce=0.09787400+1439033304,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1439033304,oauth_token=1127330335-QEV7mW0MkCJEgesejkm9kdiglbG5RYVxzaWYSIn,oauth_version=1.0,screen_name=%40arayutw,oauth_signature={ì¬‚µ‚½–¼}'
+      'Authorization': 'OAuth count=10,oauth_consumer_key='+OAUTH_CONSUMER_KEY+',oauth_nonce=0.09787400+1439033304,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1439033304,oauth_token='+OAUTH_ACCESS_TOKEN+',oauth_version=1.0,screen_name=%40arayutw,oauth_signature='+hash,
     }
-  });
-  */
+  }).then(
+    (data) => {
+      console.dir(data);
+    },
+    (err) => {
+      console.log(err);
+    }
+    );
   setInterval(function(){
     var now= new Date();
 
