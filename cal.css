@@ -22,7 +22,7 @@ td {
 }
 
 .day {
-	font-size: 8em;
+	font-size: 7em;
 	font-weight: 900;
 	line-height: 1em;
 }
@@ -32,6 +32,12 @@ td {
 	line-height: 1em;
 	text-transform: lowercase;
 }
+.show{
+  text-align: center;
+  width: 2em;
+  height: auto;
+}
+
 
 .calendar {
 	background: #000;
@@ -40,7 +46,7 @@ td {
 	box-shadow: 0 2px 1px rgba(0, 0, 0, .2), 0 3px 1px #222;
 	color: #fff;
 	display: inline-block;
-	padding: 2em;
+	padding: 1.8em;
 }
 
 .calendar thead {
@@ -90,4 +96,71 @@ td {
 	margin: 8px;
 	height: 32px;
 	width: 8px;
+}
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.8); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(255,255,255,0.4); 
+}
+
+#twitter {
+  height: 450px;
+  color: #fff;
+}
+
+.tweet div{
+  display:inline-block;
+  vertecal-align:middle;
+}
+.tweet {
+  margin: 2em 0 0 0 ;
+}
+
+.tweet img.icon{
+  width: 2em;
+  height: 2em;
+  margin: 0 0 0 0.1em;
+}
+
+.tweet div.text{
+  margin: -0.5em 0 0 2.1em;
+}
+
+.tweet div.name {
+  font-size: 0.95em;
+}
+.tweet div.screen_name {
+  color: #666;
+  font-size: 0.8em;
+  margin: 0 0 0 2px ;
+}
+.tweet div.timer{
+  color: #666;
+  font-size: 0.8em;
+  margin: 0 0 0 5em;
+}
+
+.mediaBox {
+  margin: 0 0 0 2em;
+}
+.media {
+  width: auto;
+  height: 6em;
 }

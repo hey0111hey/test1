@@ -28,71 +28,33 @@ html,body {
   </head>
   <body>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
+    <script type="text/javascript" src="oauth.js"></script>
+    <script type="text/javascript" src="sha1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="twitter.js"></script>
     <script>
 $(function(){
 
-  var params ={
-    screen_name:'heyhey0111',
-    count:10
-  };
-  var OAUTH_CONSUMER_KEY        = "RyHO8voqHhQMAdybXvlQm5cGZ";
-  var OAUTH_CONSUMER_SECRET     = "CPQ5lc49sUOX0eIIKrPPVPTfJeIJbm9C3PTqY0P1av6aNKz5sN";
-  var OAUTH_ACCESS_TOKEN        = "1127330335-QEV7mW0MkCJEgesejkm9kdiglbG5RYVxzaWYSIn";
-  var OAUTH_ACCESS_TOKEN_SECRET = "XiOMXhqGHZ9bMnS12z2ECQuS0ZgQhpp7ax0WkFPwtZtZS";
-
-  var URL ="https://api.twitter.com/1.1/statuses/user_timeline.json";
-  var encodeURL = encodeURIComponent(URL);
-  var paramStr =encodeURIComponent(_makeString(params));
-  var keyStr   =_makeKey();
-  var dataStr  ="GET&"+encodeURL+"&"+paramStr;
-  var encrypted = CryptoJS.HmacSHA1(dataStr,keyStr);
-  var hash =CryptoJS.enc.Base64.stringify(encrypted);
-
-  function _makeString(par){
-    var index=[];
-    var str='';
-    for(var i in par){
-      index.push(i);
-    }
-    index.sort();
-    for(var i in index){
-      str=str+index[i]+'='+par[index[i]]+'&';
-    }
-    return str.slice(0,-1);
-  };
-  function _makeKey(){
-    return encodeURIComponent(OAUTH_CONSUMER_SECRET)+"&"+encodeURIComponent(OAUTH_ACCESS_TOKEN_SECRET);
-  };
-  $.get({
-    url: URL,
-    data: 'screen_name='+params['screen_name']+'&count='+params['count'],
-    headers: {
-      'Authorization': 'OAuth count=10,oauth_consumer_key='+OAUTH_CONSUMER_KEY+',oauth_nonce=0.09787400+1439033304,oauth_signature_method=HMAC-SHA1,oauth_timestamp=1439033304,oauth_token='+OAUTH_ACCESS_TOKEN+',oauth_version=1.0,screen_name=%40arayutw,oauth_signature='+hash,
-    }
-  }).then(
-    (data) => {
-      console.dir(data);
-    },
-    (err) => {
-      console.log(err);
-    }
-    );
+    var loadInterval= 61*1000;
+    var twitter = new Twitter();
+    var content = {count: "100", callback: "update"};
+  setInterval(function(){
+    console.log(twitter);
+    twitter.get("https://api.twitter.com/1.1/statuses/home_timeline.json", content);
+  },loadInterval);
   setInterval(function(){
     var now= new Date();
 
     var hour   = ("00"+now.getHours()).slice(-2);
     var minute = ("00"+now.getMinutes()).slice(-2);
     var second = ("00"+now.getSeconds()).slice(-2);
-    console.log(hour+":"+minute+":"+second);
-    $("#timer").html(hour+":"+minute+":"+second)
+    /*$("#timer").html(hour+":"+minute+":"+second)
       .css({
         "font-size":"5em",
         "color": "#fff",
         "text-align": "center",
         "text-shadow":" 1px 1px 5px rgba(200, 200, 200, 0.5)"});
+        */
 
     //カレンダーの生成
     weeklyTable = new Array("SUN","MON","TUE","WED","THU","FRI","SAT");
@@ -114,8 +76,15 @@ $(function(){
     }
     //カレンダーの出力
     $("div.calendar-container > header").html("");
-    $("div.calendar-container > header").append('<div class="day">'+today+'</div>');
-    $("div.calendar-container > header").append('<div class="month">'+monthStringTable[month]+'</div>');
+    $("div.calendar-container > header").append('<div class="day">'+
+        hour+":"+minute+":"+second
+        +'</div>');
+    $("div.calendar-container > header").append('<div class="month">'+year+"/"+(month+1)+"/"+today+'</div>');
+    $("div.calendar-container > header").append('<img class="show" src="http://design-ec.com/d/e_company_12/l_e_company_120.png"></img>');
+    $(".show").click(function(){
+      console.log("clicked!");
+      $('.calendar').toggle();
+    });
     $("table.calendar > tbody").html("");
     for(var i=0;i<tableLine;i++){
       $("table.calendar>tbody").append("<tr></tr>");
@@ -132,11 +101,15 @@ $(function(){
         }
       }
     }
+    b = $(".calendar-container").height();
+    h = $(window).height();
+    console.log(h+":"+b);
+    $("#twitter").css("height", (h-b) + "px");
   },1000);
 });
+
     </script>
     <div id="container" style="height:100%">
-      <div id="hoge">hoge</div>
       <div id="right" style="float:right;background-color:#000;height:100%">
         <div id="timer"></div>
         <div class="calendar-container">
@@ -144,7 +117,7 @@ $(function(){
             <div class="day"></div>
             <div class="month"></div>
           </header>
-          <table class="calendar">
+          <table class="calendar" style="display:none;">
             <thead>
               <tr>
                 <td>Sun</td>
@@ -161,9 +134,8 @@ $(function(){
             </tbody>
 
           </table>
-
-          <div class="ring-left"></div>
-          <div class="ring-right"></div>
+        </div>
+        <div id="twitter" style="overflow:scroll;width:450px;word-wrap:break-all;">
         </div>
       </div>
     </div>
