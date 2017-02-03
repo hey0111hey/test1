@@ -27,7 +27,8 @@ html,body {
     <![endif]-->
   </head>
   <body>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+    <script type="text/javascript" src="clipboard/dist/clipboard.js"></script>
     <script type="text/javascript" src="oauth.js"></script>
     <script type="text/javascript" src="sha1.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -74,17 +75,9 @@ $(function(){
     for(i=0;i<monthTable[month];i++){
       table[i+firstDay]=i+1;
     }
-    //カレンダーの出力
-    $("div.calendar-container > header").html("");
-    $("div.calendar-container > header").append('<div class="day">'+
-        hour+":"+minute+":"+second
-        +'</div>');
-    $("div.calendar-container > header").append('<div class="month">'+year+"/"+(month+1)+"/"+today+'</div>');
-    $("div.calendar-container > header").append('<img class="show" src="http://design-ec.com/d/e_company_12/l_e_company_120.png"></img>');
-    $(".show").click(function(){
-      console.log("clicked!");
-      $('.calendar').toggle();
-    });
+
+    $("div.calendar-container > header > div.day").text( hour+":"+minute+":"+second);
+    $("div.calendar-container > header > div.month").text(year+"/"+(month+1)+"/"+today);
     $("table.calendar > tbody").html("");
     for(var i=0;i<tableLine;i++){
       $("table.calendar>tbody").append("<tr></tr>");
@@ -101,11 +94,36 @@ $(function(){
         }
       }
     }
+    resize();
+    //$('input').value(window.clipboardData.getData("Text"));
+  },1000);
+  setInterval(function(){
+    $.get("file:///D:/Documents/clip.txt",function(data){
+      $(".clipboard").text("clipboard: "+data);
+    });
+  },5000);
+
+  $(".show").click(function(){
+    console.log("clicked!");
+    $('.calendar').toggle();
+    resize();
+  });
+
+  $(".clipicon").click(function(){
+    console.log("clicked!");
+    $('.clipboard').toggle();
+    $.get("file:///D:/Documents/clip.txt",function(data){
+      $(".clipboard").text("clipboard: "+data);
+    });
+    resize();
+  });
+
+  function resize(){
     b = $(".calendar-container").height();
     h = $(window).height();
     console.log(h+":"+b);
     $("#twitter").css("height", (h-b) + "px");
-  },1000);
+  };
 });
 
     </script>
@@ -116,6 +134,9 @@ $(function(){
           <header>
             <div class="day"></div>
             <div class="month"></div>
+            <img class="show" src="http://design-ec.com/d/e_company_12/l_e_company_120.png"></img>
+            <img class="clipicon" src="http://file.fukusyunyu.iku4.com/icon_004.png"></img>
+            <div class="clipboard" style="display:none;">tmp</div>
           </header>
           <table class="calendar" style="display:none;">
             <thead>

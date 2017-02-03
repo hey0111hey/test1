@@ -32,12 +32,30 @@ td {
 	line-height: 1em;
 	text-transform: lowercase;
 }
-.show{
-  text-align: center;
-  width: 2em;
+
+.page-back{
+  width: 3em;
   height: auto;
 }
 
+.show{
+  float:left;
+  width: 2em;
+  height: auto;
+  margin-left: 0.5em;
+}
+
+.clipicon{
+  float:left;
+  width: 2em;
+  height: auto;
+  margin-left: 0.5em;
+}
+
+.clipboard{
+  text-align:left;
+  margin: -0.3em 0 0 0;
+}
 
 .calendar {
 	background: #000;
@@ -151,7 +169,15 @@ td {
   font-size: 0.8em;
   margin: 0 0 0 2px ;
 }
+
+.tweet div.cliant {
+  color: #666;
+  font-size: 0.4em;
+  margin: -1em 0 0 2.1em ;
+}
+
 .tweet div.timer{
+  float:right;
   color: #666;
   font-size: 0.8em;
   margin: 0 0 0 5em;

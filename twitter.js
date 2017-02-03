@@ -8,22 +8,29 @@ function update(data){
     var profileImage = data[i].user.profile_image_url;
     var dt = ((new Date()).getTime()-Date.parse(data[i].created_at))/1000;
     console.log(profileImage);
-    var tweet=$("<div></div>",{ "class": "tweet", });
-    var icon =$("<img></img>",{ "class": "icon","src":profileImage });
-    var name =$("<div></div>",{ "class": "name", }).text(data[i].user.name);
-    var text =$("<div></div>",{ "class": "text", }).text(data[i].text);
+    var tweet =$("<div></div>",{ "class": "tweet", });
+    var icon  =$("<img></img>",{ "class": "icon","src":profileImage });
+    var name  =$("<div></div>",{ "class": "name", }).text(data[i].user.name);
+    var text  =$("<div></div>",{ "class": "text", }).text(data[i].text);
+    var _cliant=$(data[i].source);
+    var cliant=$("<div></div>",{ "class": "cliant", }).html(_cliant.text());
     var mediaBox=$("<div></div>",{ "class": "mediaBox", });
     var time = $("<div></div>",{ "class": "timer", }).text((function(){
       var timer="";
-      if(dt<60)timer = dt+"秒前";
+      if(dt<60)timer = Math.floor(dt)+"秒前";
       else if(dt<3600)timer = Math.floor(dt/60)+"分前";
       else if(dt<3600*24)timer = Math.floor(dt/3600)+"時間前";
       else timer =  Math.floor(dt/3600/24)+"日前";
       return timer;
     })());
     var screen_name =$("<div></div>",{ "class": "screen_name", }).text("@"+data[i].user.screen_name);
-    tweet.append(icon).append(name).append(screen_name).append(screen_name).append(time).append('<br>').append(text);
-
+    tweet.append(icon)
+         .append(name)
+         .append(screen_name)
+         .append(time)
+    //     .append(cliant)
+         .append('<br>')
+         .append(text);
     //画像があれば表示する
     if(!!data[i].extended_entities){
       for(var key of data[i].extended_entities.media){
